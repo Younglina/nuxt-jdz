@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./data.db"
+}
+
+model jdz_area {
+  id           Int     @id @default(autoincrement())
+  address      String?
+  area_type    String?
+  cost         String?
+  created_at   String?
+  data_type    String?
+  description  String?
+  introduction String?
+  areakey      String?
+  latitude     Float?
+  likes        Int?
+  longitude    String?
+  location     Float?
+  name         String?
+  open_time    String?
+  phone        String?
+  tags         String?
+  updated_at   String?
+  images       String?
+  comments     Int?    @default(0)
+}
+
+model jdz_comment {
+  areakey    String?
+  content    String?
+  created_at String?
+  images     String?
+  userid     String?
+  id         Int     @id @default(autoincrement())
+  is_verify  Int?    @default(0)
+}
+
+model jdz_user {
+  username     String @unique
+  password     String
+  id           Int     @id @default(autoincrement())
+  rid          Int?    @default(4)
+  likes        String? @default("[]")
+  login_status Int?    @default(0)
+  create_time  String?
+  update_time  String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model roles {
+  id       Int?
+  menus_id String?
+  cname    String?
+  ename    String?
+
+  @@ignore
+}
