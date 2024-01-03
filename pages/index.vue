@@ -5,7 +5,7 @@
 -->
 <script setup>
 const toMe = () => {
-  navigateTo('/me')
+  navigateTo('/chargeList')
 }
 
 async function submit() {
@@ -17,7 +17,7 @@ async function submit() {
 </script>
 <template>
   <div>index</div>
-  <button @click="toMe">asdf</button>
+  <button @click="toMe" class="n-link-base">asdf</button>
   <button @click="submit">submit</button>
 </template>
 <style scoped lang='scss'></style>

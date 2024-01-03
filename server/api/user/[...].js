@@ -25,7 +25,7 @@ router
     })
     const isPasswordMatch = await bcrypt.compare(password, user.password)
     if (isPasswordMatch) {
-      const token = jwt.sign({ username }, 'woung', { expiresIn: '1h' }) // 生成JWT令牌，有效期为1小时
+      const token = jwt.sign({ username, rid, id }, 'woung', { expiresIn: '1h' }) // 生成JWT令牌，有效期为1小时
       // 将JWT令牌设置为Cookie
       setCookie(event, 'token', token, { httpOnly: true })
       return { data: '登录成功' };

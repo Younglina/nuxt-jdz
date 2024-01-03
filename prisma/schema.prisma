@@ -41,7 +41,7 @@ model jdz_comment {
 }
 
 model jdz_user {
-  username     String @unique
+  username     String  @unique
   password     String
   id           Int     @id @default(autoincrement())
   rid          Int?    @default(4)
@@ -49,6 +49,14 @@ model jdz_user {
   login_status Int?    @default(0)
   create_time  String?
   update_time  String?
+}
+
+model charge_form {
+  id    Int     @id @default(autoincrement())
+  title String  @unique
+  date  String?
+  userId  String?
+  uses  String
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
