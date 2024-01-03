@@ -25,7 +25,6 @@
     "@prisma/client": "^5.7.1",
     "@unocss/reset": "^0.58.3",
     "bcrypt": "^5.1.1",
-    "better-sqlite3": "^9.2.2",
     "jsonwebtoken": "^9.0.2"
   }
 }
