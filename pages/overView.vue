@@ -52,7 +52,7 @@ function showDetail(type) {
 }
 </script>
 <template>
-  <div class="h-90vh overflow-y-auto p-2">
+  <div class="h-sc overflow-y-auto p-2">
     <van-dropdown-menu>
       <van-dropdown-item v-model="chooseYear" @change="getOverviewData" :options="chooseOptions" />
     </van-dropdown-menu>

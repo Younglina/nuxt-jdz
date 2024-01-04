@@ -70,7 +70,7 @@ const deleteCharge = (id) => {
 onRefresh()
 </script>
 <template>
-  <van-pull-refresh v-model="loading" @refresh="onRefresh" class="h-90vh p-2">
+  <van-pull-refresh v-model="loading" @refresh="onRefresh" class="h-sc p-2 important-overflow-y-auto">
     <div class="p-2 mb-2 text-6 flex justify-between items-center">
       <span class="charge-title">Younglina的记账本</span>
       <van-button plain size="small" @click="handleAdd">新增</van-button>
