@@ -57,12 +57,19 @@ router.post('/addCharge', defineEventHandler(async (event) => {
 router
   .get('/getCharge', defineEventHandler(async (event) => {
     const query = getQuery(event)
-    const params = {}
+    let params = {}
     if (query.userId) {
       params.userId = query.userId
     }
     if (query.chargeId) {
       params.id = +query.chargeId
+    }
+    if (query.year) {
+      params = {
+        date: {
+          startsWith: query.year
+        }
+      }
     }
     const charges = await prisma.charge_form.findMany({
       where: params,
@@ -70,6 +77,16 @@ router
     return {
       status: 200,
       data: charges,
+    };
+  }))
+  .get('/deleteCharge', defineEventHandler(async (event) => {
+    const query = getQuery(event)
+    await prisma.charge_form.delete({
+      where: { id: +query.id },
+    })
+    return {
+      status: 200,
+      data: '删除成功',
     };
   }))
 export default useBase('/api/charge', router.handler);

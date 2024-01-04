@@ -9,6 +9,7 @@ const activeNames = ref("")
 const loading = ref(false);
 import { useClipboard } from '@vueuse/core'
 const onRefresh = async () => {
+  chargeList.value = {}
   const { data } = await $fetch('/api/charge/getCharge?userId=1')
   loading.value = false;
   data.map(item => {
@@ -51,6 +52,21 @@ ${item.uses.map(item => `${item.name}: ${item.cost}元`).join('\n')}
 const handleAdd = () => {
   navigateTo('/chargeUp-add')
 }
+
+const deleteCharge = (id) => {
+  showConfirmDialog({
+    title: '删除',
+    message:
+      '你确定要删除该月记录吗？',
+  })
+    .then(async () => {
+      await $fetch(`/api/charge/deleteCharge?id=${id}`)
+      showSuccessToast('删除成功');
+      onRefresh()
+    })
+    .catch(() => {
+    });
+}
 onRefresh()
 </script>
 <template>
@@ -76,6 +92,7 @@ onRefresh()
                 <van-icon v-if="isSupported" name="description-o" size="16" class="p-2px"
                   @click="toCopy(year, item.id)" />
                 <van-icon name="edit" size="16" class="p-2px" @click="toEdit(item.id)" />
+                <van-icon name="delete-o" size="16" class="p-2px" @click="deleteCharge(item.id)" />
               </div>
             </div>
           </template>

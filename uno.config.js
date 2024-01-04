@@ -9,5 +9,8 @@ export default defineConfig({
     presetIcons()
     // ...custom presets
   ],
-  shortcuts: {}
+  shortcuts: {},
+  rules: [
+    ['bg-aliceblue', { "background-color": 'aliceblue', "--un-bg-opacity": 1 }],
+  ]
 })
