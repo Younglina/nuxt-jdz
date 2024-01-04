@@ -70,12 +70,12 @@ const deleteCharge = (id) => {
 onRefresh()
 </script>
 <template>
-  <van-pull-refresh v-model="loading" @refresh="onRefresh" class="h-90vh">
-    <div class="p-2 text-6 flex justify-between items-center">
-      <span>Younglina的记账本</span>
+  <van-pull-refresh v-model="loading" @refresh="onRefresh" class="h-90vh p-2">
+    <div class="p-2 mb-2 text-6 flex justify-between items-center">
+      <span class="charge-title">Younglina的记账本</span>
       <van-button plain size="small" @click="handleAdd">新增</van-button>
     </div>
-    <div v-for="(list, year) in chargeList" :key="year" class="mb-4">
+    <div v-for="(list, year) in chargeList" :key="year" class="mb-4 box-shadow">
       <div class="flex justify-between p-2 items-center">
         <span>{{ year }}年</span>
         <div>
@@ -111,6 +111,27 @@ onRefresh()
   :deep(.van-collapse-item__content) {
     max-height: 300px;
     overflow-y: auto;
+  }
+}
+
+.charge-title {
+  color: #000;
+  mask: radial-gradient(circle at 0 50%, #f6d365, transparent 10%, transparent 0);
+  mask-size: 100%;
+  animation: scale 3s infinite;
+  background-image: linear-gradient(120deg, #fda085 0%, #f6d365 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes scale {
+  0% {
+    mask-size: 100%;
+  }
+
+  50%,
+  100% {
+    mask-size: 2000%;
   }
 }
 </style>

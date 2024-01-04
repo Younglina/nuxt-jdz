@@ -12,5 +12,6 @@ export default defineConfig({
   shortcuts: {},
   rules: [
     ['bg-aliceblue', { "background-color": 'aliceblue', "--un-bg-opacity": 1 }],
+    ['box-shadow', { "box-shadow": '0 2px 12px rgba(100, 101, 102, .12)' }],
   ]
 })

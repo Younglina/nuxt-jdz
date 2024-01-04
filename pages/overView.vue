@@ -62,7 +62,7 @@ function showDetail(type) {
         <div class="w-100% bg-aliceblue">
           <div class="cost-bar" :style="{ width: `${item.percent}%` }"></div>
         </div>
-        <div class="ml-2">{{ item.percent }}%</div>
+        <div class="ml-2 min-w-46px">{{ item.percent }}%</div>
       </div>
     </div>
     <van-dialog v-model:show="showDetailPopup" :title="popupTitle">
