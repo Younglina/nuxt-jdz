@@ -4,14 +4,19 @@
  * @Description: 
 -->
 <script setup>
-const allDate = ref([])
 const yearView = ref([])
+const chooseYear = ref('2023')
+const chooseOptions = [{ text: '全部', value: 'all' }, { text: '2023年', value: '2023' }, { text: '2024年', value: '2024' }]
 onMounted(async () => {
-  getOverviewData()
+  getOverviewData(chooseYear.value)
 })
 
-async function getOverviewData() {
-  const { data } = await $fetch(`/api/charge/getCharge?year=2023`)
+async function getOverviewData(year) {
+  showLoadingToast({
+    message: '加载中...',
+    forbidClick: true,
+  });
+  const { data } = await $fetch(`/api/charge/getCharge?year=${year}`)
   const yearData = {}
   data.map(item => {
     JSON.parse(item.uses).map(item => {
@@ -33,6 +38,7 @@ async function getOverviewData() {
       child: item[1].child
     }
   })
+  showToast({ message: '加载成功', icon: 'success' });
 }
 
 const showDetailPopup = ref(false)
@@ -47,6 +53,9 @@ function showDetail(type) {
 </script>
 <template>
   <div class="h-90vh overflow-y-auto p-2">
+    <van-dropdown-menu>
+      <van-dropdown-item v-model="chooseYear" @change="getOverviewData" :options="chooseOptions" />
+    </van-dropdown-menu>
     <div v-for="item in yearView" :key="item.name" class="m-2 text-12px">
       <div><span class="text-blue" @click="showDetail(item.name)">{{ item.name }}</span>：{{ item.cost }}元</div>
       <div class="flex items-center">

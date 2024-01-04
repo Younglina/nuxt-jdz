@@ -39,7 +39,7 @@ router.post('/addCharge', defineEventHandler(async (event) => {
     return { status: 400, data: '标题不能为空' }
   }
   const userId = '1'
-  const charge = await prisma.charge_form.update({
+  await prisma.charge_form.update({
     where: { id },
     data: {
       title,
@@ -65,9 +65,13 @@ router
       params.id = +query.chargeId
     }
     if (query.year) {
-      params = {
-        date: {
-          startsWith: query.year
+      if (query.year === 'all') {
+        params = {}
+      } else {
+        params = {
+          date: {
+            startsWith: query.year
+          }
         }
       }
     }
