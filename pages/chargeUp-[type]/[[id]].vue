@@ -9,7 +9,7 @@ const chargeForm = ref({
   "date": [currentDate.getFullYear(), currentDate.getMonth() + 1].join('-'),
   "title": "",
   "inputType": "",
-  "uses": [{ "name": "", "cost": "", "type": "" },]
+  "uses": [{ "name": "", "cost": "", "type": "" }]
 })
 const route = useRoute()
 onMounted(async () => {
@@ -22,7 +22,7 @@ onMounted(async () => {
   }
 })
 
-const types = ref(['食物', '通讯', '日常', '麻将', '穿着', '化妆品', '礼物', '学习', '彩票', '交通', '医疗'])
+const types = ref(['餐饮', '通讯', '日用', '婴儿用品', '家用', '麻将', '服装', '化妆品', '学习', '彩票', '交通', '医疗'])
 const checked = ref([]);
 const typePopupShow = ref(false)
 let currentIndex = 0
@@ -90,9 +90,10 @@ const onSubmit = async () => {
     </van-cell-group>
     <van-divider />
     <div class="pr-20px text-right">
-      <van-icon name="add-o" color="#1989fa" size="28" @click="chargeForm.uses.push({ name: '', cost: '', type: '' })" />
+      <van-icon name="add-o" color="#1989fa" size="28"
+        @click="chargeForm.uses.unshift({ name: '', cost: '', type: '' })" />
     </div>
-    <van-cell-group inset>
+    <van-cell-group inset class="important-mb-16">
       <div v-for="(item, index) in chargeForm.uses" :key="index"
         class="mb-10px ml-20px mr-30px p-2px relative border border-solid b-gray-100 border-rd">
         <van-field v-model="item.type" is-link readonly label="类型" left-icon="shopping-cart-o" placeholder="点击选择类型"
@@ -105,6 +106,14 @@ const onSubmit = async () => {
           @click="chargeForm.uses.splice(index, 1)" />
       </div>
     </van-cell-group>
+    <div class="m-5 flex justify-between position-fixed bottom-0 left-0 right-0">
+      <van-button round block @click="$router.go(-1)">
+        返回
+      </van-button>
+      <van-button round block type="primary" native-type="submit">
+        保存
+      </van-button>
+    </div>
     <!-- 类型选择弹窗 -->
     <van-popup v-model:show="typePopupShow" :close-on-click-overlay="false" class="p-20px">
       <van-field v-model="chargeForm.inputType" placeholder="没有选择的可以输入" />
@@ -120,14 +129,6 @@ const onSubmit = async () => {
         </van-button>
       </div>
     </van-popup>
-    <div class="m-5 flex justify-between">
-      <van-button round block @click="$router.go(-1)">
-        返回
-      </van-button>
-      <van-button round block type="primary" native-type="submit">
-        保存
-      </van-button>
-    </div>
     <van-dialog v-model:show="showRes" :title="chargeForm.title" show-cancel-button>
       <div class="p-4px text-center flex" v-for="(item, index) in chargeForm.uses" :key="index">
         <div class="c-blue w-50% inline-block text-right">{{ item.name }}: </div>

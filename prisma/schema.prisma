@@ -53,8 +53,8 @@ model jdz_user {
 
 model charge_form {
   id    Int     @id @default(autoincrement())
-  title String  @unique
-  date  String?
+  title String
+  date  String? @unique
   userId  String?
   uses  String
 }
