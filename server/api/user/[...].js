@@ -23,8 +23,7 @@ router
         username,
       },
     })
-    const isPasswordMatch = ""
-    // await bcrypt.compare(password, user.password)
+    const isPasswordMatch = await bcrypt.compare(password, user.password)
     if (isPasswordMatch) {
       const token = jwt.sign({ username, rid, id }, 'woung', { expiresIn: '1h' }) // 生成JWT令牌，有效期为1小时
       // 将JWT令牌设置为Cookie
@@ -40,8 +39,7 @@ router
     if (!username || !password) {
       return { status: 400, data: '用户名密码不能为空' }
     }
-    const hashedPassword = ""
-    // await bcrypt.hash(password, 10)
+    const hashedPassword = await bcrypt.hash(password, 10)
     const user = await prisma.jdz_user.create({
       data: {
         username,

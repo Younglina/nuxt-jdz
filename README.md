@@ -19,11 +19,11 @@ npx prisma introspect: 用于从现有数据库中自动生成 Prisma schema 文
 在pages下的文件会自动转成路由
 
 文件或文件夹名带上`[参数]`会成为动态路由；  
-如`/pages/chargeUp-[type]/[[id]].vue`  
+如`/pages/user-[type]/[[id]].vue`  
 ```
 // 这两个路由都能匹配
-navigateTo(`/chargeUp-edit/${id}`)
-navigateTo(`/chargeUp-add`)
+navigateTo(`/user-edit/${id}`)
+navigateTo(`/user-add`)
 
 // 通过route可获取参数
 const route = useRoute()
@@ -31,3 +31,26 @@ route.params.type
 route.params.id
 ```
 
+## app.config.js
+位于源目录（默认情况下项目的根目录）中的 `app.config.js` 文件用于公开可在构建时确定的公共变量。 与 `runtimeConfig` 选项相反，这些不能使用环境变量覆盖。
+一个最小的配置文件导出包含一个对象的 `defineAppConfig` 函数和您的配置。 `defineAppConfig` 助手无需导入即可在全球范围内使用。
+```javascript
+// app.config.js
+export default defineAppConfig({
+  title: 'Hello Nuxt',
+  theme: {
+    dark: true,
+    colors: {
+      primary: '#ff0000'
+    }
+  }
+})
+```
+
+这些变量使用 `useAppConfig` 可组合项暴露给应用程序的其余部分。
+```javascript
+pages/index.vue
+<script setup>
+const appConfig = useAppConfig()
+</script>
+```

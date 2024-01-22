@@ -55,8 +55,9 @@ router.post('/addCharge', defineEventHandler(async (event) => {
 }))
 
 router
-  .get('/getCharge', defineEventHandler(async (event) => {
+  .get('/getArea', defineEventHandler(async (event) => {
     const query = getQuery(event)
+    console.log('getArea')
     let params = {}
     if (query.userId) {
       params.userId = query.userId
@@ -64,33 +65,25 @@ router
     if (query.chargeId) {
       params.id = +query.chargeId
     }
-    if (query.year) {
-      if (query.year === 'all') {
-        params = {}
-      } else {
-        params = {
-          date: {
-            startsWith: query.year
-          }
-        }
-      }
-    }
-    const charges = await prisma.charge_form.findMany({
+    const area = await prisma.jdz_area.findMany({
       where: params,
+      orderBy: {
+        likes: 'desc' // 按likes字段降序排序
+      }
     })
     return {
       status: 200,
-      data: charges,
+      data: area,
     };
   }))
   .get('/deleteCharge', defineEventHandler(async (event) => {
     const query = getQuery(event)
     await prisma.charge_form.delete({
-      where: { id: +query.id },
+      where: { id: +query.id }
     })
     return {
       status: 200,
       data: '删除成功',
     };
   }))
-export default useBase('/api/charge', router.handler);
+export default useBase('/api/area', router.handler);

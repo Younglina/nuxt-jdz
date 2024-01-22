@@ -17,10 +17,10 @@ model jdz_area {
   description  String?
   introduction String?
   areakey      String?
-  latitude     Float?
+  latitude     String?
   likes        Int?
   longitude    String?
-  location     Float?
+  location     String?
   name         String?
   open_time    String?
   phone        String?
