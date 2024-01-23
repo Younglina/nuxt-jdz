@@ -15,52 +15,13 @@ import {
 } from 'h3';
 
 const router = createRouter();
-router.post('/addCharge', defineEventHandler(async (event) => {
-  const { title, date, uses } = await readBody(event)
-  if (!title) {
-    return { status: 400, data: '标题不能为空' }
-  }
-  const userId = '1'
-  const charge = await prisma.charge_form.create({
-    data: {
-      title,
-      date,
-      uses: JSON.stringify(uses),
-      userId,
-    },
-  })
-  return {
-    status: 200,
-    message: '新增成功',
-  }
-})).post('/updateCharge', defineEventHandler(async (event) => {
-  const { title, date, uses, id } = await readBody(event)
-  if (!title) {
-    return { status: 400, data: '标题不能为空' }
-  }
-  const userId = '1'
-  await prisma.charge_form.update({
-    where: { id },
-    data: {
-      title,
-      date,
-      uses: JSON.stringify(uses),
-      userId,
-    },
-  })
-  return {
-    status: 200,
-    message: '更新成功',
-  }
-}))
-
 router
   .get('/getArea', defineEventHandler(async (event) => {
     const query = getQuery(event)
-    console.log('getArea')
+    console.log(query)
     let params = {}
-    if (query.userId) {
-      params.userId = query.userId
+    if (query.id) {
+      params.id = +query.id
     }
     if (query.chargeId) {
       params.id = +query.chargeId
@@ -73,17 +34,38 @@ router
     })
     return {
       status: 200,
-      data: area,
+      data: area.map(item => {
+        item.imgs = JSON.parse(item.images).map(item => `https://younglina-1256042946.cos.ap-nanjing.myqcloud.com/${item}`)
+        item.tags = JSON.parse(item.tags)
+        if (item.imgs.length) {
+          item.firstImg = `https://younglina-1256042946.cos.ap-nanjing.myqcloud.com/${item.imgs[0]}`
+        }
+        return item
+      })
     };
   }))
-  .get('/deleteCharge', defineEventHandler(async (event) => {
+  .get('/getAreaComment', defineEventHandler(async (event) => {
     const query = getQuery(event)
-    await prisma.charge_form.delete({
-      where: { id: +query.id }
+    const comment = await prisma.jdz_comment.findMany({
+      where: {
+        areakey: query.areakey
+      },
+      include: {
+        user: {
+          select: {
+            username: true
+          }
+        }
+      }
     })
     return {
       status: 200,
-      data: '删除成功',
+      data: comment.map(item => {
+        item.images = JSON.parse(item.images).map(item => `https://younglina-1256042946.cos.ap-nanjing.myqcloud.com/${item}`)
+        item.nickname = item.user.username
+        delete item.user
+        return item
+      }),
     };
   }))
 export default useBase('/api/area', router.handler);

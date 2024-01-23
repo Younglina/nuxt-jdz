@@ -54,3 +54,8 @@ pages/index.vue
 const appConfig = useAppConfig()
 </script>
 ```
+
+## useFetch
+useFetch在onMounted中不起作用，返回null  
+解决办法：用$fetch
+https://github.com/nuxt/nuxt/issues/22688#issuecomment-1722944613

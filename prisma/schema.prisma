@@ -35,28 +35,30 @@ model jdz_comment {
   content    String?
   created_at String?
   images     String?
-  userid     String?
-  id         Int     @id @default(autoincrement())
-  is_verify  Int?    @default(0)
+  userid     Int?
+  id         Int       @id @default(autoincrement())
+  is_verify  Int?      @default(0)
+  user   jdz_user? @relation(fields: [userid], references: [id])
 }
 
 model jdz_user {
-  username     String  @unique
+  username     String        @unique
   password     String
-  id           Int     @id @default(autoincrement())
-  rid          Int?    @default(4)
-  likes        String? @default("[]")
-  login_status Int?    @default(0)
+  id           Int           @id @default(autoincrement())
+  rid          Int?          @default(4)
+  likes        String?       @default("[]")
+  login_status Int?          @default(0)
   create_time  String?
   update_time  String?
+  jdz_comment  jdz_comment[]
 }
 
 model charge_form {
-  id    Int     @id @default(autoincrement())
-  title String
-  date  String? @unique
-  userId  String?
-  uses  String
+  id     Int     @id @default(autoincrement())
+  title  String
+  date   String? @unique
+  userId String?
+  uses   String
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.

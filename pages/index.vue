@@ -4,35 +4,33 @@
  * @Description: 
 -->
 <script setup>
-const images = ref([])
-const { imgBase } = useAppConfig()
-async function getImages() {
-  const { data } = await useFetch('/api/area/getArea')
-  data.value.data.slice(0, 6).map(item => {
-    const imgs = JSON.parse(item.images)
-    if (imgs.length) {
-      images.value.push({
-        url: `${imgBase}${imgs[0]}`,
-        name: item.name,
-        likes: item.likes,
-        description: item.description
-      })
-    }
+const jdz = useJdzStore()
+const dataObj = reactive({
+  food: [],
+  scenic: [],
+  porcelain: [],
+})
+await callOnce(jdz.getArea)
+onMounted(async () => {
+  console.log(jdz.areas, 'jdz.areas')
+  jdz.areas.map(item => {
+    dataObj[item.data_type].push(item)
   })
-}
-getImages()
+})
 </script>
 <template>
-  <div>
+  <div class="p-10px ">
     <van-swipe :autoplay="3000" lazy-render class="h-30vh">
-      <van-swipe-item v-for="image in images" :key="image">
-        <img :src="image.url" fit="fill" class="h-100% w-100%" />
+      <van-swipe-item v-for="item in jdz.areas.slice(0, 6)" :key="item.id">
+        <img :src="item.firstImg" fit="fill" class="h-100% w-100%" />
         <span class="rd-4px bg-light-50 color-black absolute bottom-6px right-6px px-6px py-2px text-12px">
-          {{ image.name }}
+          {{ item.name }}
         </span>
       </van-swipe-item>
     </van-swipe>
-    <card-list title="热门推荐" :cards="images"></card-list>
+    <card-list title="热门景点" :cards="dataObj.scenic"></card-list>
+    <card-list title="热门美食" :cards="dataObj.food"></card-list>
+    <card-list title="热门商区" :cards="dataObj.porcelain"></card-list>
   </div>
 </template>
 <style scoped lang='scss'></style>
