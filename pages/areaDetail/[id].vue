@@ -73,26 +73,27 @@ const handleLike = () => {
       <div class="detail-info">
         <div class="detail-info__title">
           <div>{{ detailData.name }}</div>
-          <div @click="handleLike" class="i-mdi-heart" :color="isLike ? 'red' : 'inherit'"></div>
+          <!-- @unocss-include -->
+          <div @click="handleLike" :class="isLike ? 'i-mdi-heart-circle-outline' : 'i-mdi-cards-heart-outline'" :color="isLike ? 'red' : 'inherit'"></div>
         </div>
         <van-divider />
         <div class="detail-info__address">
           <div>
             <div>{{ detailData.address }}</div>
             <div class="detail-info__cost">
-              <div v-if="detailData.open_time"><van-icon name="clock-o" />{{ detailData.open_time }}</div>
-              <div v-if="detailData.cost" class="detail-info__cost__money"><van-icon name="cash-o" />{{ detailData.cost }}
+              <div v-if="detailData.open_time"><div class="i-mdi-clock-time-five-outline inline-block"></div>{{ detailData.open_time }}</div>
+              <div v-if="detailData.cost" class="detail-info__cost__money"><div class="i-mdi-credit-card-outline inline-block"></div>{{ detailData.cost }}
               </div>
             </div>
           </div>
           <div class="detail-info__action">
             <div @click="showAction = !showAction">
-              <van-icon name="location-o" size="0.5rem" />
+              <div class="i-mdi-map-marker-radius-outline font-size-18px mx-auto"></div>
               <div>地图</div>
             </div>
             <div v-if="detailData.phone" @click="showCall">
               <a :href="`tel:${detailData.phone}`" ref="phoneCall" style="display: none;"></a>
-              <van-icon name="phone-o" size="0.5rem" />
+              <div class="i-mdi-phone-outline font-size-18px mx-auto"></div>
               <div>电话</div>
             </div>
           </div>

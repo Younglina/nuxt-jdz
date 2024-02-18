@@ -4,16 +4,16 @@
  * @Description: 
 -->
 <script setup>
-const jdz = useJdzStore()
+const jdzStore = useJdzStore()
 const dataObj = reactive({
   food: [],
   scenic: [],
   porcelain: [],
 })
-await callOnce(jdz.getArea)
+await callOnce(jdzStore.getArea)
 onMounted(async () => {
-  console.log(jdz.areas, 'jdz.areas')
-  jdz.areas.map(item => {
+  console.log(jdzStore.areas, 'jdzStore.areas')
+  jdzStore.areas.map(item => {
     dataObj[item.data_type].push(item)
   })
 })
@@ -21,7 +21,7 @@ onMounted(async () => {
 <template>
   <div class="p-10px ">
     <van-swipe :autoplay="3000" lazy-render class="h-30vh">
-      <van-swipe-item v-for="item in jdz.areas.slice(0, 6)" :key="item.id">
+      <van-swipe-item v-for="item in jdzStore.areas.slice(0, 6)" :key="item.id">
         <img :src="item.firstImg" fit="fill" class="h-100% w-100%" />
         <span class="rd-4px bg-light-50 color-black absolute bottom-6px right-6px px-6px py-2px text-12px">
           {{ item.name }}
